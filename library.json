@@ -1,0 +1,11 @@
+{
+    "name": "esp32-toolkit",
+    "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wormoworm/esp32-toolkit.git"
+    },
+    "dependencies": {
+        "knolleary/PubSubClient": "^2.8"
+    }
+}
