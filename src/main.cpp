@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include "SensorToolkitWifi.h"
 #include "SensorToolkitMqtt.h"
-#include "..\..\arduino\secrets.h"
 #include "config.h"
 
 /**
@@ -15,8 +14,8 @@ void setup() {
     Serial.begin(115200);
 
     pinMode(LED_BUILTIN, OUTPUT);
-    connectToWifi(SECRET_WIFI_SSID, SECRET_WIFI_PASSWORD, true);
-    mqttClient.connect(SECRET_MQTT_USER, SECRET_MQTT_PASSWORD, CONFIG_MQTT_KEEP_ALIVE);
+    connectToWifi(WIFI_SSID, WIFI_PASSWORD, true);
+    mqttClient.connect(MQTT_USERNAME, MQTT_PASSWORD, CONFIG_MQTT_KEEP_ALIVE);
 }
 
 void loop() {
