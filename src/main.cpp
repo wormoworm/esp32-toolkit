@@ -23,5 +23,6 @@ void loop() {
     delay(50);
     digitalWrite(LED_BUILTIN, LOW);
     mqttClient.publish("test", "Hello, world!");
-    delay(1000);
+    mqttClient.loop();
+    delay(950);
 }

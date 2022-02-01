@@ -6,14 +6,14 @@
 
 class SensorToolkitMqtt {
     public:
-        SensorToolkitMqtt(Client& wifiClient, char* address, uint16_t port, char* clientId);
+        SensorToolkitMqtt(Client& wifiClient, const char* address, uint16_t port, const char* clientId);
         boolean connect(const char *username, const char *password, uint16_t keepAlive);
-        boolean publish(char* topic, char* payload);
+        boolean publish(const char* topic, const char* payload);
         boolean loop();
 
     private:
         PubSubClient client;
-        char *mqttClientId;
+        const char *mqttClientId;
 };
 
 #endif

@@ -5,7 +5,7 @@
 
 class SmoothingBuffer {
     public:
-        SmoothingBuffer(int size);
+        SmoothingBuffer(size_t size);
         void storeValue(float value);
         float getAverage();
 

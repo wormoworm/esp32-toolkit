@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include "SensorToolkitWifi.h"
 
-void connectToWifi(char* ssid, char* password, boolean debug) {
+void connectToWifi(const char* ssid, const char* password, boolean debug) {
     if (debug) {
         Serial.println();
         Serial.println();
@@ -27,6 +27,6 @@ void connectToWifi(char* ssid, char* password, boolean debug) {
     }
 }
 
-void connectToWifi(char* ssid, char* password) {
+void connectToWifi(const char* ssid, const char* password) {
     connectToWifi(ssid, password, false);
 }

@@ -1,7 +1,7 @@
 #include <Wifi.h>
 #include "SensorToolkitMqtt.h"
 
-SensorToolkitMqtt::SensorToolkitMqtt(Client& wifiClient, char* address, uint16_t port, char* clientId) {
+SensorToolkitMqtt::SensorToolkitMqtt(Client& wifiClient, const char* address, uint16_t port, const char* clientId) {
     client = PubSubClient(wifiClient);
     client.setServer(address, port);
     mqttClientId = clientId;
@@ -14,7 +14,6 @@ boolean SensorToolkitMqtt::connect(const char *username, const char *password, u
         if (client.connect(mqttClientId, username, password)) {
             Serial.println("Connected to MQTT");
             yield();
-            return true;
         }
         else {
             Serial.print("Failed to connect to MQTT: ");
@@ -23,9 +22,10 @@ boolean SensorToolkitMqtt::connect(const char *username, const char *password, u
             return false;
         }
     }
+    return true;
 }
 
-boolean SensorToolkitMqtt::publish(char* topic, char* payload) {
+boolean SensorToolkitMqtt::publish(const char* topic, const char* payload) {
     return client.publish(topic, payload);
 }
 
