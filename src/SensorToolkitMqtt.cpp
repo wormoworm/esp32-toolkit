@@ -7,6 +7,11 @@ SensorToolkitMqtt::SensorToolkitMqtt(Client& wifiClient, const char* address, ui
     mqttClientId = clientId;
 }
 
+boolean SensorToolkitMqtt::setCallback(MQTT_CALLBACK_SIGNATURE) {
+    client.setCallback(callback);
+    return true;
+}
+
 boolean SensorToolkitMqtt::connect(const char *username, const char *password, uint16_t keepAlive) {
     client.setKeepAlive(keepAlive);
     while (!client.connected()) {
@@ -27,6 +32,10 @@ boolean SensorToolkitMqtt::connect(const char *username, const char *password, u
 
 boolean SensorToolkitMqtt::publish(const char* topic, const char* payload) {
     return client.publish(topic, payload);
+}
+
+boolean SensorToolkitMqtt::subscribe(const char* topic) {
+    return client.subscribe(topic);
 }
 
 boolean SensorToolkitMqtt::loop() {
