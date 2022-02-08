@@ -2,7 +2,10 @@
 #include <Arduino.h>
 #include "SensorToolkitWifi.h"
 
-void connectToWifi(const char* ssid, const char* password, boolean debug) {
+void SensorToolkitWifi::connectToWifi(const char* ssid, const char* password, boolean debug) {
+
+    int tickDurationMs = 100;
+
     if (debug) {
         Serial.println();
         Serial.println();
@@ -12,10 +15,12 @@ void connectToWifi(const char* ssid, const char* password, boolean debug) {
   
     WiFi.begin(ssid, password);
 
+    int connectionTicks = 0;
     while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
-        yield();
+        delay(tickDurationMs);
+        if (_connectionTickCallback) {
+            _connectionTickCallback(++connectionTicks);
+        }
     }
 
     if (debug) {
@@ -23,10 +28,13 @@ void connectToWifi(const char* ssid, const char* password, boolean debug) {
         Serial.println("WiFi connected");  
         Serial.println("IP address: ");
         Serial.println(WiFi.localIP());
-        yield();
     }
 }
 
-void connectToWifi(const char* ssid, const char* password) {
+void SensorToolkitWifi::connectToWifi(const char* ssid, const char* password) {
     connectToWifi(ssid, password, false);
+}
+
+void SensorToolkitWifi::setConnectionTickCallback(std::function<void(uint16_t)> connectionTickCallback){
+    _connectionTickCallback = connectionTickCallback;
 }

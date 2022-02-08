@@ -7,8 +7,13 @@
  * @brief This is a sample program that tests some of the functionality offered by this library.
  */
 
+SensorToolkitWifi *wifiClient;
 WiFiClient espClient;
 SensorToolkitMqtt mqttClient = SensorToolkitMqtt(espClient, CONFIG_MQTT_BROKER_ADDRESS, CONFIG_MQTT_BROKER_PORT, CONFIG_MQTT_CLIENT_ID);
+
+void wifiConnectionTickCallback(uint16_t tickNumber) {
+    Serial.println(".");
+}
 
 /**
  * @brief Callback that is invoked whenever a message is received on a topic that the MQTT client is subscribed to.
@@ -34,7 +39,9 @@ void setup() {
     Serial.begin(115200);
 
     pinMode(LED_BUILTIN, OUTPUT);
-    connectToWifi(WIFI_SSID, WIFI_PASSWORD, true);
+    wifiClient = new SensorToolkitWifi();
+    wifiClient->setConnectionTickCallback(wifiConnectionTickCallback);
+    wifiClient->connectToWifi(WIFI_SSID, WIFI_PASSWORD, true);
     mqttClient.setCallback(mqttSubscribeCallback);
     mqttClient.connect(MQTT_USERNAME, MQTT_PASSWORD, CONFIG_MQTT_KEEP_ALIVE);
     mqttClient.subscribe("test/incoming");
