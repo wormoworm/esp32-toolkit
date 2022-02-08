@@ -47,7 +47,7 @@ void setup() {
     mqttClient.connect(MQTT_USERNAME, MQTT_PASSWORD, CONFIG_MQTT_KEEP_ALIVE);
     mqttClient.subscribe("test/incoming");
 
-    syncNtp(0, 3600, "pool.ntp.org");
+    syncNtp(0, 3600, "pool.ntp.org", true);
     Serial.print("Epoch time: ");
     Serial.println(getEpochTime());
 }

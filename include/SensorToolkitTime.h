@@ -4,8 +4,17 @@
 #include <Arduino.h>
 #include <sys/time.h>
 
-void syncNtp(long gmtOffsetS, int daylightOffsetS, const char* serverAddress) {
+void syncNtp(long gmtOffsetS, int daylightOffsetS, const char* serverAddress, boolean debug = false) {
+    unsigned long start;
+    if (debug) {
+       start = millis();
+    }
     configTime(gmtOffsetS, daylightOffsetS, serverAddress);
+    if (debug) {
+        unsigned long end = millis();
+        Serial.print("NTP sync took: ");
+        Serial.println(end - start);
+    }
 }
 
 // Function that gets current epoch time
