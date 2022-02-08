@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "SensorToolkitWifi.h"
 #include "SensorToolkitMqtt.h"
+#include "SensorToolkitTime.h"
 #include "config.h"
 
 /**
@@ -45,6 +46,10 @@ void setup() {
     mqttClient.setCallback(mqttSubscribeCallback);
     mqttClient.connect(MQTT_USERNAME, MQTT_PASSWORD, CONFIG_MQTT_KEEP_ALIVE);
     mqttClient.subscribe("test/incoming");
+
+    syncNtp(0, 3600, "pool.ntp.org");
+    Serial.print("Epoch time: ");
+    Serial.println(getEpochTime());
 }
 
 void loop() {
