@@ -6,11 +6,11 @@
 class SmoothingBuffer {
     public:
         SmoothingBuffer(size_t size);
-        void storeValue(float value);
-        float getAverage();
+        void storeValue(double value);
+        double getAverage();
 
     private:
-        float* values;
+        double *values;
         int pointer;
         int bufferSize;
         int valuesInBuffer;

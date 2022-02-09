@@ -3,13 +3,13 @@
 
 SmoothingBuffer::SmoothingBuffer(size_t size) {
     bufferSize = size;
-    values = new float[bufferSize];
+    values = new double[bufferSize];
     for(int i = 0; i < bufferSize; i++) {
         values[i] = 0;
     }
 }
 
-void SmoothingBuffer::storeValue(float value) {
+void SmoothingBuffer::storeValue(double value) {
     values[pointer++] = value;
     if(pointer >= bufferSize) {
         pointer = 0;
@@ -20,10 +20,10 @@ void SmoothingBuffer::storeValue(float value) {
     }
 }
 
-float SmoothingBuffer::getAverage() {
-    float total = 0.0;
+double SmoothingBuffer::getAverage() {
+    double total = 0.0;
     for(int i = 0; i < valuesInBuffer; i++) {
         total += values[i];
     }
-    return total / (float) valuesInBuffer;
+    return total / (double) valuesInBuffer;
 }
