@@ -2,7 +2,7 @@
 #include "SensorToolkitWifi.h"
 #include "SensorToolkitMqtt.h"
 #include "SensorToolkitTime.h"
-#include "config.h"
+#include "DemoConfig.h"
 
 /**
  * @brief This is a sample program that tests some of the functionality offered by this library.

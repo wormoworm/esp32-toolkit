@@ -1,5 +1,5 @@
-#ifndef config_H
-#define config_H
+#ifndef DemoConfig_H
+#define DemoConfig_H
 
 #include "IPAddress.h"
 
