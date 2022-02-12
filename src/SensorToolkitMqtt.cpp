@@ -7,6 +7,10 @@ SensorToolkitMqtt::SensorToolkitMqtt(Client& wifiClient, const char* address, ui
     mqttClientId = clientId;
 }
 
+boolean SensorToolkitMqtt::isConnected() {
+    return client.connected();
+}
+
 boolean SensorToolkitMqtt::setCallback(MQTT_CALLBACK_SIGNATURE) {
     client.setCallback(callback);
     return true;
@@ -22,7 +26,7 @@ boolean SensorToolkitMqtt::connect(const char *username, const char *password, u
         }
         else {
             Serial.print("Failed to connect to MQTT: ");
-            Serial.print(client.state());
+            Serial.println(client.state());
             yield();
             return false;
         }

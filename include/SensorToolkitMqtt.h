@@ -8,6 +8,8 @@ class SensorToolkitMqtt {
     public:
         SensorToolkitMqtt(Client& wifiClient, const char* address, uint16_t port, const char* clientId);
 
+        boolean isConnected();
+
         boolean setCallback(MQTT_CALLBACK_SIGNATURE);
 
         boolean connect(const char *username, const char *password, uint16_t keepAlive);

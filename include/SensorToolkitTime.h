@@ -13,7 +13,8 @@ void syncNtp(long gmtOffsetS, int daylightOffsetS, const char* serverAddress, bo
     if (debug) {
         unsigned long end = millis();
         Serial.print("NTP sync took: ");
-        Serial.println(end - start);
+        Serial.print(end - start);
+        Serial.println("ms");
     }
 }
 

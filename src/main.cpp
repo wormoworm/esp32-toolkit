@@ -13,7 +13,9 @@ WiFiClient espClient;
 SensorToolkitMqtt mqttClient = SensorToolkitMqtt(espClient, CONFIG_MQTT_BROKER_ADDRESS, CONFIG_MQTT_BROKER_PORT, CONFIG_MQTT_CLIENT_ID);
 
 void wifiConnectionTickCallback(uint16_t tickNumber) {
-    Serial.println(".");
+    if (tickNumber % 10 == 0) {
+        Serial.print(".");
+    }
 }
 
 /**
@@ -36,27 +38,37 @@ void mqttSubscribeCallback(char* topic, byte* payload, unsigned int length) {
   Serial.println("-----------------------");
 }
 
+void connectToWiFi() {
+    if (wifiClient->connectToWifi(WIFI_SSID, WIFI_PASSWORD, true)) {
+        mqttClient.setCallback(mqttSubscribeCallback);
+        mqttClient.connect(MQTT_USERNAME, MQTT_PASSWORD, CONFIG_MQTT_KEEP_ALIVE);
+        mqttClient.subscribe("test/incoming");
+        syncNtp(0, 3600, "pool.ntp.org", true);
+    }
+    else {
+        Serial.println("Failed to connect to WiFi");
+    }
+}
+
 void setup() {
     Serial.begin(115200);
 
     pinMode(LED_BUILTIN, OUTPUT);
     wifiClient = new SensorToolkitWifi();
     wifiClient->setConnectionTickCallback(wifiConnectionTickCallback);
-    wifiClient->connectToWifi(WIFI_SSID, WIFI_PASSWORD, true);
-    mqttClient.setCallback(mqttSubscribeCallback);
-    mqttClient.connect(MQTT_USERNAME, MQTT_PASSWORD, CONFIG_MQTT_KEEP_ALIVE);
-    mqttClient.subscribe("test/incoming");
-
-    syncNtp(0, 3600, "pool.ntp.org", true);
-    Serial.print("Epoch time: ");
-    Serial.println(getEpochTime());
+    wifiClient->setIpConfig(CONFIG_WIFI_IP_ADDRESS, CONFIG_WIFI_GATEWAY, CONFIG_WIFI_SUBNET);
 }
 
 void loop() {
+    if (!wifiClient->isConnected()) {
+        connectToWiFi();
+    }
+    if (mqttClient.isConnected()) {
+        mqttClient.publish("test/outgoing", "Hello, world!");
+    }
+    mqttClient.loop();
     digitalWrite(LED_BUILTIN, HIGH);
     delay(50);
     digitalWrite(LED_BUILTIN, LOW);
-    mqttClient.publish("test/outgoing", "Hello, world!");
-    mqttClient.loop();
     delay(950);
 }
