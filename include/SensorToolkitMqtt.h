@@ -14,7 +14,7 @@ class SensorToolkitMqtt {
 
         boolean connect(const char *username, const char *password, uint16_t keepAlive);
 
-        boolean publish(const char* topic, const char* payload);
+        boolean publish(const char* topic, const char* payload, boolean retain = false);
 
         boolean subscribe(const char* topic, uint8_t qos = 1);
 

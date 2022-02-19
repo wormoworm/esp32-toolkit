@@ -34,8 +34,8 @@ boolean SensorToolkitMqtt::connect(const char *username, const char *password, u
     return true;
 }
 
-boolean SensorToolkitMqtt::publish(const char* topic, const char* payload) {
-    return client.publish(topic, payload);
+boolean SensorToolkitMqtt::publish(const char* topic, const char* payload, boolean retain) {
+    return client.publish(topic, payload, retain);
 }
 
 boolean SensorToolkitMqtt::subscribe(const char* topic, uint8_t qos) {
