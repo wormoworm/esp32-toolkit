@@ -38,8 +38,8 @@ boolean SensorToolkitMqtt::publish(const char* topic, const char* payload) {
     return client.publish(topic, payload);
 }
 
-boolean SensorToolkitMqtt::subscribe(const char* topic) {
-    return client.subscribe(topic);
+boolean SensorToolkitMqtt::subscribe(const char* topic, uint8_t qos) {
+    return client.subscribe(topic, qos);
 }
 
 boolean SensorToolkitMqtt::loop() {

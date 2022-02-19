@@ -42,7 +42,7 @@ void connectToWiFi() {
     if (wifiClient->connectToWifi(WIFI_SSID, WIFI_PASSWORD, true)) {
         mqttClient.setCallback(mqttSubscribeCallback);
         mqttClient.connect(MQTT_USERNAME, MQTT_PASSWORD, CONFIG_MQTT_KEEP_ALIVE);
-        mqttClient.subscribe("test/incoming");
+        mqttClient.subscribe("test/incoming", 1);
         syncNtp(0, 3600, "pool.ntp.org", true);
     }
     else {
