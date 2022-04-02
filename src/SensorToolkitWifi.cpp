@@ -1,5 +1,10 @@
+#ifdef ARDUINO_ARCH_ESP32
 #include <Wifi.h>
 #include <esp_wifi.h>
+#endif
+#ifdef ARDUINO_ARCH_ESP8266
+#include <ESP8266WiFi.h>
+#endif
 #include <Arduino.h>
 #include "SensorToolkitWifi.h"
 

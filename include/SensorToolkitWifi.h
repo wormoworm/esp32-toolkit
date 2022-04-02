@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <functional>
+#include <IPAddress.h>
 
 #define CONNECTION_TICK_INTERVAL_MS 10
 #define CONNECTION_TIMEOUT_MS_DEFAULT 10000

@@ -1,4 +1,10 @@
+#ifdef ARDUINO_ARCH_ESP32
 #include <Wifi.h>
+#include <esp_wifi.h>
+#endif
+#ifdef ARDUINO_ARCH_ESP8266
+#include <ESP8266WiFi.h>
+#endif
 #include "SensorToolkitMqtt.h"
 
 SensorToolkitMqtt::SensorToolkitMqtt(Client& wifiClient, const char* address, uint16_t port, const char* clientId) {

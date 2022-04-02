@@ -1,7 +1,14 @@
 #ifndef SensorToolkitMqtt_H
 #define SensorToolkitMqtt_H
 
-#include <WiFi.h>
+#ifdef ARDUINO_ARCH_ESP32
+#include <Wifi.h>
+#include <esp_wifi.h>
+#endif
+#ifdef ARDUINO_ARCH_ESP8266
+#include <ESP8266WiFi.h>
+#endif
+
 #include <PubSubClient.h>
 
 class SensorToolkitMqtt {

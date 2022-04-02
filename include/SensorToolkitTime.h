@@ -4,6 +4,24 @@
 #include <Arduino.h>
 #include <sys/time.h>
 
+#ifdef ARDUINO_ARCH_ESP8266
+// This function is not available on ESP8266, so I copied it from esp32-hal-time.c
+bool getLocalTime(struct tm * info, uint32_t ms = 5000)
+{
+    uint32_t start = millis();
+    time_t now;
+    while((millis()-start) <= ms) {
+        time(&now);
+        localtime_r(&now, info);
+        if(info->tm_year > (2016 - 1900)){
+            return true;
+        }
+        delay(10);
+    }
+    return false;
+}
+#endif
+
 void syncNtp(long gmtOffsetS, int daylightOffsetS, const char* serverAddress, boolean debug = false) {
     unsigned long start;
     if (debug) {
@@ -38,6 +56,8 @@ unsigned long getEpochTime() {
 //     // return (int64_t) tv.tv_usec + tv.tv_sec * 1000000ll;
 // }
 
+#ifndef ARDUINO_ARCH_ESP8266
+// The println() calls below are not correct for ESP8266, so I've removed this function on ESP8266.
 void printLocalTime(){
   struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){
@@ -71,5 +91,6 @@ void printLocalTime(){
   Serial.println(timeWeekDay);
   Serial.println();
 }
+#endif
 
 #endif
